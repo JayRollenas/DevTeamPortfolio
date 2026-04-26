@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Design | Engineering Collective</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+        :root {
+            --primary: #020617;
+            --accent: #60a5fa;
+            --accent-glow: rgba(96, 165, 250, 0.15);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0; 
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: center; /* Updated from space-between to center */
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 15px 5%;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-size: 20px; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+
+        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav ul li a { 
+            text-decoration: none; 
+            color: var(--text-main); 
+            font-size: 11px;
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-weight: 600;
+            opacity: 0.5; 
+            transition: var(--transition);
+        }
+        nav ul li a:hover { opacity: 1; color: var(--accent); }
+
+        /* --- Hero --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 8%;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, transparent 70%);
+        }
+
+        .hero-tag { 
+            color: var(--accent); 
+            font-weight: 600; 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            margin-bottom: 20px; 
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .hero-tag::before, .hero-tag::after { content: ''; width: 30px; height: 1px; background: var(--accent); }
+
+        .hero h1 { 
+            font-size: clamp(2.5rem, 8vw, 6rem); 
+            font-weight: 800; 
+            line-height: 0.95; 
+            letter-spacing: -0.05em; 
+            margin-bottom: 30px; 
+        }
+
+        /* --- Team Section --- */
+        section { padding: 120px 8%; }
+        .label { font-size: 11px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; }
+        .title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 60px; letter-spacing: -0.02em; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 20px;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .img-wrapper {
+            width: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            background: #0f172a;
+        }
+
+        .member-card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 1; 
+            transition: var(--transition); 
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            background: rgba(30, 41, 59, 0.6);
+            box-shadow: 0 20px 40px var(--accent-glow);
+        }
+
+        .member-card:hover img { transform: scale(1.05); }
+
+        .member-card h4 { 
+            font-size: 14px; 
+            font-weight: 700; 
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        /* --- Updated Tech Stack Layout --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--border);
+            border-radius: 12px;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .skill-item:hover {
+            background: rgba(96, 165, 250, 0.05);
+            border-color: var(--accent);
+            color: var(--text-main);
+            transform: translateX(10px);
+            box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* --- Services --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .service-box {
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            transition: var(--transition);
+        }
+        .service-box:hover { border-color: var(--accent); transform: scale(1.02); }
+        .service-box h3 { font-size: 20px; margin-bottom: 15px; color: var(--accent); }
+        .service-box p { color: var(--text-muted); font-size: 14px; }
+
+        footer { 
+            padding: 60px 8%; 
+            border-top: 1px solid var(--border); 
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Reveal Logic --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="navbar">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#skills">Tech Stack</a></li>
+                <li><a href="#services">Services</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">System.Ready // 2026</span>
+            <h1>High-Fidelity Engineering.</h1>
+            <p style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">We bridge the gap between abstract hardware logic and intuitive digital interfaces.</p>
+        </div>
+    </section>
+
+    <section id="team" class="reveal">
+        <p class="label">Human Capital</p>
+        <h2 class="title">The Collective</h2>
+        <div class="team-grid">
+            <div class="member-card">
+                <div class="img-wrapper">
+                    <img src="C:\Users\gmari\Downloads\jeril.jpeg" alt="Jeril D. Rollenas">
+                </div>
+                <h4>Jeril D. Rollenas</h4>
+            </div>
+            <div class="member-card">
+                <div class="img-wrapper">
+                    <img src="C:\Users\gmari\Downloads\photo_6098217351569411431_y.jpg" alt="Mariella Paula A. Garcia">
+                </div>
+                <h4>Mariella Paula A. Garcia</h4>
+            </div>
+            <div class="member-card">
+                <div class="img-wrapper">
+                    <img src="C:\Users\gmari\Downloads\REYES.jpg" alt="Lee R. Reyes">
+                </div>
+                <h4>Lee R. Reyes</h4>
+            </div>
+            <div class="member-card">
+                <div class="img-wrapper">
+                    <img src="C:\Users\gmari\Downloads\sam.JPG" alt="Samantha Shanne J. Pantaleon">
+                </div>
+                <h4>Samantha Shanne J. Pantaleon</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="reveal">
+        <p class="label">Stack</p>
+        <h2 class="title">Specialized Tech</h2>
+        <div class="skills-grid">
+            <div class="skill-item"><div class="skill-dot"></div>HTML</div>
+            <div class="skill-item"><div class="skill-dot"></div>CSS</div>
+            <div class="skill-item"><div class="skill-dot"></div>JavaScript</div>
+            <div class="skill-item"><div class="skill-dot"></div>MySQL</div>
+            <div class="skill-item"><div class="skill-dot"></div>PHP</div>
+            <div class="skill-item"><div class="skill-dot"></div>System Analysis</div>
+            <div class="skill-item"><div class="skill-dot"></div>Database Management</div>
+            <div class="skill-item"><div class="skill-dot"></div>Software Documentation</div>
+        </div>
+    </section>
+
+    <section id="services" class="reveal">
+        <p class="label">Operational Output</p>
+        <h2 class="title">Services</h2>
+        <div class="services-grid">
+            <div class="service-box">
+                <h3>Responsive UI/UX</h3>
+                <p>Crafting adaptable, high-performance interfaces that ensure a seamless user experience across all devices and screen sizes.</p>
+            </div>
+            <div class="service-box">
+                <h3>Database Design & Management</h3>
+                <p>Architecting scalable data structures and optimizing relational systems for maximum integrity and retrieval speed.</p>
+            </div>
+            <div class="service-box">
+                <h3>Real-Time Engagement & Dashboards</h3>
+                <p>Dynamic monitoring systems featuring live telemetry and interactive data visualization for immediate operational insights.</p>
+            </div>
+            <div class="service-box">
+                <h3>Automated PDF & Report Generation</h3>
+                <p>Engineered reporting systems that dynamically compile complex data into professional, branded PDF documents instantly.</p>
+            </div>
+            <div class="service-box">
+                <h3>Custom SQL Transaction & Audit Logging</h3>
+                <p>Comprehensive transaction tracking and immutable audit trails to ensure complete transparency and regulatory compliance.</p>
+            </div>
+            <div class="service-box">
+                <h3>Client Portal & Self-Service Gateway</h3>
+                <p>Secure, centralized self-service environments allowing clients to manage resources and access critical data independently.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>&copy; 2026 GROUP DESIGN COLLECTIVE</div>
+        <div style="color: var(--accent);">EXCELLENCE IN ENGINEERING</div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        window.addEventListener("scroll", () => {
+            const header = document.getElementById("navbar");
+            header.classList.toggle("scrolled", window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>
